@@ -144,12 +144,7 @@ mindspace/
 ```
 
 ## 🎨 Design
-
-- Fundo animado com gradientes roxos/azuis
-- Glassmorphism (vidro fosco) nos elementos
-- Layout responsivo mobile-first
-- Transições suaves e animações
-- Paleta de cores mental health (calma e relaxante)
+O fundo de todas as paginas usa o seguinte tema: https://github.com/baunov/gradients-bg
 
 ## 💡 Notas
 
