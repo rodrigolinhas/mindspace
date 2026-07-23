@@ -125,7 +125,7 @@ mindspace/
 Clone the repository and install root dependencies:
 
 ```bash
-git clone https://github.com/your-username/mindspace.git
+git clone https://github.com/rodrigolinhas/mindspace.git
 cd mindspace
 npm install
 ```
