@@ -1,0 +1,118 @@
+{
+  "nav": {
+    "home": "Home",
+    "login": "Login",
+    "stats": "Stats",
+    "history": "History",
+    "settings": "Settings",
+    "logout": "Logout",
+    "dailyQuote": "Daily Quote",
+    "admin": "Admin",
+    "back": "Back"
+  },
+  "home": {
+    "subtitle": "Your space for mental wellbeing and daily reflection",
+    "loading": "Loading..."
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "loginBtn": "Login",
+    "noAccount": "Don't have an account?",
+    "register": "Register",
+    "connectionError": "Connection error. Please try again."
+  },
+  "register": {
+    "title": "Create Account",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "registerBtn": "Create Account",
+    "hasAccount": "Already have an account?",
+    "login": "Login"
+  },
+  "dashboard": {
+    "chart": "My Feelings",
+    "addSentiment": "How are you feeling today?",
+    "add": "Record Feeling",
+    "recentEntries": "Recent Entries",
+    "viewHistory": "View Full History",
+    "title": "Dashboard"
+  },
+  "feelings": {
+    "happy": "Happy",
+    "sad": "Sad",
+    "angry": "Angry",
+    "anxious": "Anxious",
+    "calm": "Calm",
+    "hopeful": "Hopeful",
+    "motivated": "Motivated",
+    "tired": "Tired",
+    "nervous": "Nervous",
+    "thoughtful": "Thoughtful"
+  },
+  "stats": {
+    "title": "Emotional Wellness Analysis",
+    "loading": "Loading data...",
+    "noData": "No data found. Add your first sentiment!",
+    "backHome": "Back to Profile",
+    "errorAdding": "Error adding sentiment",
+    "errorLoading": "Error loading data",
+    "errorConnection": "Connection error"
+  },
+  "history": {
+    "title": "Feelings History",
+    "loading": "Loading...",
+    "noEntries": "No records yet",
+    "deleteButton": "Delete",
+    "entriesCount": "Entries",
+    "confirmDelete": "Are you sure you want to delete this entry?",
+    "errorLoading": "Error loading history",
+    "errorConnection": "Connection error",
+    "errorDelete": "Error deleting entry"
+  },
+  "settings": {
+    "title": "Account Settings",
+    "newPassword": "New Password",
+    "newEmail": "New email",
+    "dangerZone": "Danger Zone",
+    "deleteAccount": "Delete Account",
+    "save": "Save changes",
+    "success": "Changes saved successfully"
+  },
+  "modal": {
+    "warning": "Warning",
+    "deleteConfirm": "Are you sure? After deletion it CANNOT be recovered.",
+    "cancel": "Cancel",
+    "continue": "Continue"
+  },
+  "admin": {
+    "title": "Admin",
+    "loading": "Loading users...",
+    "searchPlaceholder": "Search user...",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "role": "Role",
+    "createdAt": "Created At",
+    "actions": "Actions",
+    "promote": "Promote",
+    "demote": "Demote",
+    "delete": "Delete",
+    "noUserFound": "No user found with",
+    "searchHint": "Search for a user to see the results",
+    "usersCount": "registered user(s)"
+  },
+  "quotes": {
+    "title": "Quotes",
+    "refresh": "Refresh"
+  },
+  "quote": {
+    "lang": "en"
+  },
+  "profile": {
+    "welcome": "Welcome"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "nav": {
+    "home": "Início",
+    "login": "Entrar",
+    "stats": "Estatísticas",
+    "history": "Histórico",
+    "settings": "Definições",
+    "logout": "Sair",
+    "dailyQuote": "Frase do Dia",
+    "admin": "Admin",
+    "back": "Voltar"
+  },
+  "home": {
+    "subtitle": "O seu espaço para bem-estar mental e reflexão diária",
+    "loading": "A carregar..."
+  },
+  "login": {
+    "title": "Entrar",
+    "email": "Email",
+    "password": "Password",
+    "loginBtn": "Entrar",
+    "noAccount": "Não tem conta?",
+    "register": "Registar",
+    "connectionError": "Erro de ligação. Por favor tente novamente."
+  },
+  "register": {
+    "title": "Criar Conta",
+    "username": "Nome de utilizador",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirmar Password",
+    "registerBtn": "Criar Conta",
+    "hasAccount": "Já tem conta?",
+    "login": "Entrar"
+  },
+  "dashboard": {
+    "chart": "Os Meus Sentimentos",
+    "addSentiment": "Como te sentes hoje?",
+    "add": "Registar Sentimento",
+    "recentEntries": "Últimas Entradas",
+    "viewHistory": "Ver Histórico Completo",
+    "title": "Dashboard"
+  },
+  "feelings": {
+    "happy": "Feliz",
+    "sad": "Triste",
+    "angry": "Irritado",
+    "anxious": "Ansioso",
+    "calm": "Calmo",
+    "hopeful": "Esperançoso",
+    "motivated": "Motivado",
+    "tired": "Cansado",
+    "nervous": "Nervoso",
+    "thoughtful": "Pensativo"
+  },
+  "stats": {
+    "title": "Análise de Bem-Estar Emocional",
+    "loading": "A carregar dados...",
+    "noData": "Sem dados encontrados. Adicione o seu primeiro sentimento!",
+    "backHome": "Voltar ao Perfil",
+    "errorAdding": "Erro ao adicionar sentimento",
+    "errorLoading": "Erro ao carregar dados",
+    "errorConnection": "Erro de conexão"
+  },
+  "history": {
+    "title": "Histórico de Sentimentos",
+    "loading": "A carregar...",
+    "noEntries": "Ainda não tem registos",
+    "deleteButton": "Eliminar",
+    "entriesCount": "Registos",
+    "confirmDelete": "Tem a certeza que deseja eliminar esta entrada?",
+    "errorLoading": "Erro ao carregar histórico",
+    "errorConnection": "Erro de conexão",
+    "errorDelete": "Erro ao eliminar entrada"
+  },
+  "settings": {
+    "title": "Definições da Conta",
+    "newPassword": "Nova Password",
+    "newEmail": "Novo email",
+    "dangerZone": "Zona de Perigo",
+    "deleteAccount": "Remover Conta",
+    "save": "Guardar alterações",
+    "success": "Alterações guardadas com sucesso"
+  },
+  "modal": {
+    "warning": "Atenção",
+    "deleteConfirm": "Tem a certeza? Após ser apagado NÃO pode-se recuperar.",
+    "cancel": "Cancelar",
+    "continue": "Continuar"
+  },
+  "admin": {
+    "title": "Admin",
+    "loading": "A carregar utilizadores...",
+    "searchPlaceholder": "Pesquisar utilizador...",
+    "username": "Nome de Utilizador",
+    "email": "Email",
+    "password": "Password",
+    "role": "Role",
+    "createdAt": "Criado Em",
+    "actions": "Ações",
+    "promote": "Promover",
+    "demote": "Despromover",
+    "delete": "Eliminar",
+    "noUserFound": "Nenhum utilizador encontrado com",
+    "searchHint": "Pesquise por um utilizador para ver os resultados",
+    "usersCount": "utilizador(es) registado(s)"
+  },
+  "quotes": {
+    "title": "Frases",
+    "refresh": "Atualizar"
+  },
+  "quote": {
+    "lang": "pt"
+  },
+  "profile": {
+    "welcome": "Bem-vindo"
+  }
+}
