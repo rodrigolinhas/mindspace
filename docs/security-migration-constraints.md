@@ -295,45 +295,63 @@ Every previously identified hypothesis is evaluated against the source code and 
 
 ---
 
-## 2. Constraints & Requirements for V2 (NestJS + PostgreSQL)
+## 2. Migration Constraints & Proposed V2 Directions
 
-The findings above dictate the following architectural constraints for the V2 redesign:
+The findings above inform the architectural boundaries and design considerations for the V2 redesign across subsequent milestones (M1–M5). Every item below is explicitly distinguished as an established constraint, a proposed direction, or an open decision.
 
-### 2.1 Security & Auth Redesign (Milestones M2 & M5)
-1. **Remove `role` from Public Registration**:
-   - The user registration DTO (`RegisterUserDto`) must omit `role`. New users must unconditionally receive `'user'` role on creation.
-   - Admin assignment must be restricted to an internal CLI command, initial seeder, or authenticated admin management endpoint.
-2. **Implement NestJS Guards for Role-Based Access Control (RBAC)**:
-   - Introduce `@UseGuards(JwtAuthGuard, RolesGuard)` and `@Roles('admin')`.
-   - `GET /api/users` must be strictly gated behind the admin guard.
-3. **Purge Password Hashes from JWT Payloads**:
-   - Construct an explicit `JwtPayload` interface containing only safe claims: `{ sub: number, username: string, role: string }`.
-   - Never pass raw database entities to `jwtService.sign()`.
+### 2.1 Security & Access Control
+
+1. **Registration Role Assignment**:
+   - **CONFIRMED CONSTRAINT**: The public user registration endpoint must not allow unauthenticated clients to self-assign administrative roles.
+   - **PROPOSED V2 DIRECTION**: The public registration DTO should omit the `role` attribute entirely, defaulting all public registrations to the standard user role. Administrative provisioning should be managed through explicit seed scripts, administrative management endpoints, or internal CLI tasks.
+
+2. **Role-Based Access Control (RBAC)**:
+   - **CONFIRMED CONSTRAINT**: Access to administrative endpoints (such as full user directory listing) must strictly require administrative authorization, not merely authentication.
+   - **PROPOSED V2 DIRECTION**: Implement declarative NestJS authorization guards (e.g., combining `JwtAuthGuard` with a custom `RolesGuard` and `@Roles('admin')` metadata decorator).
+
+3. **Purging Password Hashes from Token Payloads**:
+   - **CONFIRMED CONSTRAINT**: Raw database user entities containing password hashes must never be passed to token generation routines or exposed to clients.
+   - **PROPOSED V2 DIRECTION**: Define a strict `JwtPayload` contract containing only safe identity claims (e.g., subject ID, username, role).
+
 4. **Password Policy Enforcement**:
-   - Update password validation using `class-validator` to enforce a minimum of 8 characters, requiring mixed case, numbers, and symbols.
-5. **Secure Token Storage**:
-   - Transition from `localStorage` to HTTP-only, `SameSite=Strict`, `Secure` cookies for JWT storage to neutralize XSS token exfiltration.
+   - **CONFIRMED CONSTRAINT**: Password validation rules must be strengthened beyond the 3-character V1 threshold to prevent trivial or easily guessed passwords.
+   - **PROPOSED V2 DIRECTION**: Enforce validation rules (e.g., minimum 8 characters with complexity requirements) via class-validator DTO decorators.
+
+5. **Token Storage & Transport Strategy**:
+   - **CONFIRMED FACT**: V1 persists the JWT and user profile in client-side `localStorage`.
+   - **PROPOSED V2 DIRECTION**: Evaluate whether to retain Bearer tokens with improved storage discipline or transition to HTTP-only, `SameSite=Strict`, `Secure` cookies to mitigate XSS token extraction risks.
+   - **OPEN DECISION**: The final token transport and storage architecture (Bearer header vs HTTP-only cookies, single token vs access/refresh token pair) remains an open decision to be resolved during Milestone M2 (Authentication & Users) and M5 (Hardening & V2 Release).
+
 6. **Configuration Validation**:
-   - Use `@nestjs/config` with Joi or Zod to validate that `JWT_SECRET`, `DATABASE_URL`, and `PORT` are provided at application bootstrap.
+   - **CONFIRMED CONSTRAINT**: Core secrets (such as JWT secret) and configuration settings must be validated at application startup rather than relying on unvalidated environment assertions.
+   - **PROPOSED V2 DIRECTION**: Leverage NestJS ConfigModule with validation schemas (Joi or Zod) to assert configuration validity at startup.
 
-### 2.2 Domain & Model Decoupling (Milestone M1)
-1. **Separate Entity vs DTO Layers**:
-   - Persistence entity: TypeORM or Prisma `User` entity containing hashed password.
-   - Public DTO: `UserResponseDto` using `@Exclude()` or explicit transformation omitting `password`.
-   - Shared client types must never define or expect a `password` field on queried user records.
+### 2.2 Domain & Model Decoupling
 
-### 2.3 Persistence Migration (Milestones M1 & M4)
-1. **Schema Migrations**:
-   - Implement managed migrations (TypeORM migrations or Prisma migrate) rather than relying on `synchronize: true` or `IF NOT EXISTS` raw SQL.
+1. **Separation of Concerns**:
+   - **CONFIRMED CONSTRAINT**: Persistence models must be strictly decoupled from public API transfer objects (DTOs) and client-facing interfaces.
+   - **PROPOSED V2 DIRECTION**: Introduce isolated persistence entities and transfer DTOs with explicit data mapping.
+   - **OPEN DECISION**: Selection of persistence framework / ORM (e.g. TypeORM, Prisma, Kysely, or MikroORM) will be evaluated and decided in Milestone M1 (NestJS + PostgreSQL Foundation).
+
+### 2.3 Persistence Migration & Data Continuity
+
+1. **Schema Management**:
+   - **CONFIRMED CONSTRAINT**: Schema evolution in V2 must use versioned, managed database migrations rather than ad-hoc startup SQL execution (`CREATE TABLE IF NOT EXISTS`).
+   - **OPEN DECISION**: The migration tooling will be chosen in accordance with the ORM/persistence library selected in Milestone M1.
+
 2. **Timestamp Normalization**:
-   - The SQLite -> PostgreSQL data migration script (M4) must parse both `'YYYY-MM-DD HH:MM:SS'` and `'YYYY-MM-DDTHH:MM:SSZ'` strings into standard PostgreSQL `TIMESTAMPTZ`.
-3. **Identity & Sequences**:
-   - Map SQLite `INTEGER AUTOINCREMENT` IDs to PostgreSQL `BIGINT GENERATED ALWAYS AS IDENTITY` or `BIGSERIAL`.
-   - Explicitly synchronize PostgreSQL sequences (`setval`) after migrating data to prevent primary key collision on subsequent insertions.
-4. **Quote Management**:
-   - Model quotes as a managed PostgreSQL table (`QuoteEntity` with `id`, `text`, `author`, `language`) seeded from the text corpus.
+   - **CONFIRMED CONSTRAINT**: The migration pipeline must handle both verified V1 timestamp formats (ISO 8601 strings and SQLite `CURRENT_TIMESTAMP` strings) and convert them faithfully into PostgreSQL `TIMESTAMPTZ` without data loss or timezone shifts.
 
-### 2.4 Testing Foundation (Milestones M1–M3)
-1. **Test Infrastructure**:
-   - Set up Jest or Vitest test harness in M1.
-   - Author integration tests using `supertest` covering authentication flows, RBAC authorization gates, and entry ownership verification.
+3. **Identity & Sequence Synchronization**:
+   - **CONFIRMED CONSTRAINT**: Legacy numeric primary keys for users and entries must be preserved to maintain relational integrity, and PostgreSQL sequence counters must be updated post-import.
+
+4. **Motivational Quotes Corpus**:
+   - **CONFIRMED FACT**: Quotes in V1 are stored in text files (`quotes-pt.txt`, `quotes-eng.txt`) and served from memory, not persisted in SQLite.
+   - **OPEN DECISION**: Whether quotes should be migrated into a managed PostgreSQL table or retained as static localized assets will be decided during M1/M4 planning.
+
+### 2.4 Testing Infrastructure
+
+1. **Test Baseline**:
+   - **CONFIRMED FACT**: MindSpace V1 has zero automated test coverage across all packages.
+   - **PROPOSED V2 DIRECTION**: Establish a modern test runner (such as Jest or Vitest) in Milestone M1 and implement end-to-end integration tests (using Supertest) for authentication, RBAC, and data ownership.
+

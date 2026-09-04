@@ -44,10 +44,11 @@ c234876820dc9d01594e334615169bbc40c7e384 2025-11-02 16:05:05 +0000 Initial commi
 
 ## 4. Recommended Baseline Tag & Release Identifier
 
-Because no historical tags or releases exist in the repository, and the package version `"version": "3.141592653589793"` is a symbolic constant (Pi) rather than a Semantic Version, a formal versioning convention must be established for the migration.
+Because no historical tags or releases exist in the repository, and the package version `"version": "3.141592653589793"` is a symbolic constant (Pi) rather than a Semantic Version, an official versioning convention should be established for future reference.
 
-### Recommendation: `v1.0.0-baseline` (or `v1.0.0`)
-- **Suggested Tag Name**: `v1.0.0-baseline`
+### RECOMMENDED FOLLOW-UP: Tag `v1.0.0`
+- **Recommended Tag Name**: `v1.0.0`
+  - *SemVer Note*: Under Semantic Versioning (SemVer 2.0.0 §9), hyphenated suffixes such as `-baseline` denote a pre-release (e.g. `1.0.0-baseline` has lower precedence than `1.0.0`). Because V1 represents the completed, deployed initial version of the system, a standard release tag `v1.0.0` (with release title/description indicating it preserves the initial V1 baseline) avoids misleading pre-release semantics.
 - **Target Commit**: `23ce400f45971e48de30f30996914da24e2005b8`
 - **Release Title**: `MindSpace V1 Baseline (Express + React + SQLite)`
 - **Release Notes Summary**:
@@ -55,8 +56,8 @@ Because no historical tags or releases exist in the repository, and the package 
 
 ### Mutation Policy Adherence
 Per M0 operational discipline:
-- **No tags or releases have been created on the remote repository** as part of this documentation work.
-- Tagging and GitHub release publication remain pending explicit user authorization.
+- **No tags or releases have been created on the remote or local repository** as part of this documentation work.
+- Tagging and GitHub release publication remain a **RECOMMENDED FOLLOW-UP** pending explicit user authorization.
 
 ---
 
